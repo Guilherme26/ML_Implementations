@@ -1,3 +1,11 @@
+"""
+	This module is able to perform Logistic Regression 
+	for multidimensional data. However, it only outputs 
+	binary responses according to a given probability.
+	In order to work correctly, the algorithm must receive 
+	a list of records, that, by its turn must also be a list
+"""
+
 import numpy as np, math, copy
 
 class LogisticRegression():
@@ -8,11 +16,13 @@ class LogisticRegression():
 	num_feat = 0
 	num_input = 0
 	_noChange = 0
+	_threshold = 0.5
 
-	def __init__(self, alpha=0.0005):
+	def __init__(self, alpha=0.0005, threshold=0.5):
 		self.alpha = alpha
 		self._noChange = 0
 		self.x = []
+		self._threshold = threshold
 
 	def fit(self, x, y):
 		"""
@@ -39,7 +49,7 @@ class LogisticRegression():
 
 	def predict(self, xi):
 		# Equal probability for either positive or negative
-		if self._hypothesis(np.concatenate(([1], xi))) > 0.5:
+		if self._hypothesis(np.concatenate(([1], xi))) > self._threshold:
 			return True
 		return False
 
